@@ -65,6 +65,8 @@ h1,h2{margin:0}h2.script{font-size:clamp(2.2rem,9vw,3.4rem)}
 .player button{border:1px solid var(--gold);background:var(--ivory);border-radius:99px;padding:.15rem .7rem;color:var(--burg);font-weight:700}
 .player button[aria-pressed=true]{background:var(--burg);color:#fff2d6}.player input{width:70px;accent-color:var(--burg)}
 .ytl{border:1px solid var(--gold);background:var(--ivory);border-radius:99px;padding:.15rem .7rem;color:var(--burg);font-weight:700;text-decoration:none;white-space:nowrap}.ytl:hover{background:var(--burg);color:#fff2d6}
+@media(max-width:560px){.player{flex-wrap:nowrap;gap:.3rem;padding:.25rem .5rem .25rem .3rem;font-size:.8rem}.player>div:not(.vinyl){display:none}.player input{display:none}.player button,.ytl{padding:.1rem .5rem;font-size:.8rem}#pp{padding:.15rem .6rem}}
+@media(max-width:350px){.vinyl{display:none}}
 .player b{display:block;line-height:1.1;font-size:.92rem}.player small{opacity:.75;font-size:.78rem}
 #next{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:75;padding:.95rem 2.4rem}
 #next.pop{animation:pin .55s cubic-bezier(.3,1.6,.4,1) both,glow 2.6s ease-in-out .55s infinite}
@@ -377,7 +379,7 @@ $("#blow").onclick=()=>{const c=$("#cake");if(c.classList.contains("out"))return
 
 /* balloon wishes */
 const bst=$("#bstage"),popped=new Set(),wp=$("#wpop"),wc=$("#wcard");
-const BAL=[["14%",22,"#f08fa7"],["38%",2,"#e6b657"],["62%",26,"#c98291"],["86%",8,"#f6bfcb"],["18%",214,"#d9a441"],["42%",240,"#e8909f"],["66%",204,"#b5485f"],["88%",236,"#f3c9d1"]];
+const BAL=[["14%",22,"#f08fa7"],["38%",18,"#e6b657"],["62%",26,"#c98291"],["86%",18,"#f6bfcb"],["18%",214,"#d9a441"],["42%",240,"#e8909f"],["66%",204,"#b5485f"],["88%",236,"#f3c9d1"]];
 function showWish(i){$("#wnum").textContent=`Wish ${i+1} of ${WISHES.length}`;$("#wtxt").textContent=WISHES[i];wp.hidden=false;wc.classList.remove("pop");void wc.offsetWidth;wc.classList.add("pop");$("#wclose").focus()}
 BAL.forEach(([x,y,c],i)=>{const b=document.createElement("button");b.className="bln";b.style.cssText=`left:calc(${x} - 32px);top:${y}px;--c:${c};--d:${-i*.5}s`;b.setAttribute("aria-label","Balloon "+(i+1)+": pop to read a wish");b.innerHTML='<span class="bb"></span><span class="str"></span>';
  b.onclick=()=>{if(!popped.has(i)){const r=b.getBoundingClientRect();burst(r.left+r.width/2,r.top+40,26,.6);popped.add(i);$("#balCt").textContent=`${popped.size} of ${WISHES.length} balloons popped`;b.classList.add("pp");setTimeout(()=>{b.classList.remove("pp");b.classList.add("kept");b.setAttribute("aria-label","Read wish "+(i+1)+" again")},RM?10:420);setTimeout(()=>showWish(i),RM?0:280)}else showWish(i)};bst.append(b)});
